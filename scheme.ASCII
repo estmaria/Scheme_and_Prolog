@@ -1,0 +1,62 @@
+;Name: Maria Esteban
+;Date: 12/05/2024
+;Purpose: write 5 functions that manipulate list
+
+
+;Concatenate two lists
+(define (append1 list1 list2)           
+(if (null? list1)     ; check if the first list is null     
+      list2       ; if it is null just return the second list          
+      (cons (car list1) (append1 (cdr list1) list2)) ; else,  create a new pair for a list with the first element of list1 and the recursive call of the function, with the next element of list1 as the first argument and list2 as the second argument)
+        
+    )
+)
+
+
+;Check whether an element is a member of a list
+(define (member? n list)
+  (if (null? list)   ;check if the list is null and return false if it is     
+      #f               
+      (if (equal? n (car list)) ;compare the element with the element of the list and return true if it is equal
+        #t
+        (member? n (cdr list)) ;use recursion with the same element of the list
+	) 
+    )
+)
+
+
+;Check whether an element is a member of a list
+(define (member1 n list)
+  (if (null? list)   ;check if the list is null and return false if it is     
+      #f               
+      (if (equal? n (car list)) ;compare the element with the element of the list and return the rest of the list
+        list
+        (member1 n (cdr list));use recursion with the same element of the list
+	) 
+    )
+)
+
+
+;Takes an arbitrarily complicated list of primitives and sublists and generates a list with all the same primitives, in the same order, but
+without all the intervening parentheses
+(define (flatten lst)
+  (if (null? lst)   ;when the parameter is null, just return an empty list. 
+      '()           
+      (if (list? (car lst)) ;check if the car of the list is a list
+          (append1 (flatten (car lst)) (flatten (cdr lst))) ;if it is a list, append the the flatter of the car and the cdr of the list
+          (cons (car lst) (flatten (cdr lst))) ;if is not a list, create a pair with the car and the flatten of the cdr of the list
+        )
+    )
+) 
+
+
+;Takes two lists and pairs corresponding elements of the lists
+(define (zip list1 list2)
+  (if (or (null? list1) (null? list2)) ;if either list is null, return an empty list
+      '()                       
+      (cons (list (car list1) (car list2)) ;create a list with the next element of each list
+            (zip (cdr list1) (cdr list2)) ;recursive call to get the next element of each list
+        )
+    )
+        
+)

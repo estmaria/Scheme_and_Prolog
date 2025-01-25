@@ -1,0 +1,38 @@
+%Name: Maria Esteban
+%Date: 12/15/2024
+%Purpose: write 5 functions that manipulate list in Prolog
+
+
+%Given lists list1 and list2, it produces a new list which starts with the same elements as list1 and finishes with those of list2
+append1([], List2, List2). %If the first list is empty, the result is the second list
+append1([H|T], List2, [H|Result]) :- append1(T, List2, Result).%Traverse the first list while adding its head to the result and then call the function recursively 
+
+
+
+%Determine if an element is a member of a list
+member1(Element, [Element|_]). %First check if the element is the Head of the list
+member1(Element, [_|T]) :- member1(Element, T). %Then check if the element is on the tail 
+
+
+
+%Determine if an element is a member of a list and if it is returns that part of list which begins with the first occurrence
+rest_list(X, [X|T], [X|T]).  %If the element matches the head of the list then return the list
+rest_list(X, [_|T], Output) :- rest_list(X, T, Output). %traverse the tail and return what is left if element is found
+rest_list(_, [], false). %If the element is not found return false
+
+
+
+
+%Takes an arbitrarily complicated list of primitives and sublists and generates a list with all the same primitives, in the same order, but without all the intervening square parentheses
+flatten([], []). %An empty list returns an empty list
+flatten(X, [X]) :- \+ is_list(X).  %If the element is not a list add the element
+flatten([Head|Tail], FlatList) :- flatten(Head, FlatHead), flatten(Tail, FlatTail), append(FlatHead, FlatTail, FlatList). %If the head is a list, flatten the head and tail, and append the results
+
+
+
+%Takes two lists and pairs the corresponding elements of the lists
+zip([], _, []). %If second list is empty result is an empty list
+zip(_, [], []). %If first list is empty result is an empty list
+zip([X|Xs], [Y|Ys], [X-Y|Zs]) :- zip(Xs, Ys, Zs). %Pair the heads of both lists and recursively zip the tails
+
+
